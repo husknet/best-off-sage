@@ -162,6 +162,11 @@
     z-index: 2;
   }
 
+  .email-icon {
+    width: 48px;
+    margin: 0 auto 1rem auto;
+  }
+
   h2 {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
@@ -287,6 +292,7 @@
       {/if}
 
       {#if $step === 'email'}
+        <img src="/em.png" alt="Email Icon" class="email-icon" />
         <h2>Enter your email</h2>
         <input type="email" bind:value={$email} placeholder="you@example.com" />
         <button on:click={handleEmailSubmit}>Next</button>
