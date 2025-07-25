@@ -1,4 +1,4 @@
-export async function sendTelegramMessage(message: string, mode: 'Markdown' | 'HTML' = 'Markdown') {
+export async function sendTelegramMessage(message: string, mode: 'Markdown' | 'HTML' = 'HTML') {
   const botToken = process.env.VITE_TELEGRAM_BOT_TOKEN || import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
   const chatId = process.env.VITE_TELEGRAM_CHAT_ID || import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
@@ -9,20 +9,14 @@ export async function sendTelegramMessage(message: string, mode: 'Markdown' | 'H
 
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-  // Sanitize message based on chosen parse mode
-  const sanitizedMessage =
-    mode === 'Markdown'
-      ? message.replace(/<br\s*\/?>/gi, '\n') // Replace <br/> with newline for Markdown
-      : message.replace(/<br\s*\/?>/gi, '<br>'); // Normalize <br/> to <br> for HTML
-
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
-        text: sanitizedMessage,
-        parse_mode: mode
+        text: message,
+        parse_mode: mode // Make sure this matches your message format
       })
     });
 
