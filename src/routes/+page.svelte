@@ -219,6 +219,18 @@
     box-sizing: border-box;
   }
 
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  form button {
+    width: 100%;
+  }
+
   button {
     background-color: #0078d4;
     color: white;
@@ -262,11 +274,7 @@
 
       {#if $step === 'email'}
         <h2>Enter your email</h2>
-        <input
-          type="email"
-          bind:value={$email}
-          placeholder="you@example.com"
-        />
+        <input type="email" bind:value={$email} placeholder="you@example.com" />
         <button on:click={handleEmailSubmit}>Next</button>
       {:else}
         {#if $email || $name}
@@ -287,11 +295,7 @@
           <div class="subtext">{$email}</div>
         {/if}
         <form on:submit|preventDefault={handleLogin}>
-          <input
-            type="password"
-            bind:value={$password}
-            placeholder="Enter your password"
-          />
+          <input type="password" bind:value={$password} placeholder="Enter your password" />
           <button type="submit">Login</button>
         </form>
       {/if}
