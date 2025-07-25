@@ -10,14 +10,14 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "engines": {
-    "node": ">=18 <21"
+    "node": ">=20"
   },
   "dependencies": {
     "svelte": "^3.59.2",
-    "@sveltejs/kit": "1.29.0"
+    "@sveltejs/kit": "^2.0.0"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^2.1.0",
+    "@sveltejs/adapter-vercel": "^3.0.0",
     "svelte-check": "^3.6.6",
     "svelte-preprocess": "^5.0.4",
     "typescript": "^5.3.3",
