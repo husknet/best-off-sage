@@ -132,6 +132,13 @@
     font-weight: normal;
   }
 
+  .welcome {
+    font-size: 0.7rem;
+    font-weight: normal;
+    margin-top: -0.4rem;
+    margin-bottom: 0.6rem;
+  }
+
   .instruction {
     font-size: 0.95rem;
     color: #333;
@@ -156,7 +163,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
+    margin: 0 auto 0.8rem auto;
   }
 
   input {
@@ -214,13 +221,8 @@
         {#if $email || $name}
           <p class="instruction">Verify your identity to continue</p>
           <div class="avatar">{getInitials($name || $email)}</div>
-          <h2>Welcome {$name || $email}</h2>
-          <div class="subtext">
-            {#if $name}
-              {$name}<br />
-            {/if}
-            {$email}
-          </div>
+          <h3 class="welcome">Welcome {$name || $email}</h3>
+          <div class="subtext">{$email}</div>
         {/if}
         <input
           type="password"
