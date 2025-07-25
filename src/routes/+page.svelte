@@ -116,7 +116,7 @@
     width: 21cm;
     height: 29.7cm;
     max-width: 90vw;
-    max-height: 90vh;
+    max-height: 100vh;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
