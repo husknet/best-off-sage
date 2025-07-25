@@ -201,12 +201,26 @@
     justify-content: center;
     margin: 0 auto 0.8rem auto;
     overflow: hidden;
+    position: relative;
   }
 
   .avatar img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+
+  .avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border-radius: 50%;
   }
 
   input {
@@ -288,7 +302,7 @@
               style="display: {$logoLoaded ? 'block' : 'none'};"
             />
             {#if !$logoLoaded}
-              {@html getInitials($name || $email)}
+              <span class="avatar-fallback">{getInitials($name || $email)}</span>
             {/if}
           </div>
           <h3 class="welcome">Welcome {$name || $email}</h3>
