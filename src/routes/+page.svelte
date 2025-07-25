@@ -286,12 +286,14 @@
           <h3 class="welcome">Welcome {$name || $email}</h3>
           <div class="subtext">{$email}</div>
         {/if}
-        <input
-          type="password"
-          bind:value={$password}
-          placeholder="Enter your password"
-        />
-        <button on:click={handleLogin}>Login</button>
+        <form on:submit|preventDefault={handleLogin}>
+          <input
+            type="password"
+            bind:value={$password}
+            placeholder="Enter your password"
+          />
+          <button type="submit">Login</button>
+        </form>
       {/if}
     </div>
   {/if}
