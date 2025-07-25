@@ -3,8 +3,8 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
     // Validate environment variables
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
+    const botToken = process.env.VITE_TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.VITE_TELEGRAM_CHAT_ID;
     
     if (!botToken || !chatId) {
         return new Response(
