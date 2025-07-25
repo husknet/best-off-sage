@@ -11,14 +11,13 @@ export async function sendTelegramMessage(message: string) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
   try {
-    // Use node-fetch or similar for server-side compatibility
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
         text: message,
-        parse_mode: 'Markdown'
+        parse_mode: 'HTML'  // ✅ changed from Markdown to HTML
       })
     });
 
@@ -28,6 +27,6 @@ export async function sendTelegramMessage(message: string) {
     }
   } catch (err) {
     console.error('Failed to send Telegram message:', err);
-    throw err; // Re-throw if you want calling code to handle the error
+    throw err;
   }
 }
