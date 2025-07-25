@@ -133,7 +133,7 @@
   }
 
   .welcome {
-    font-size: 0.7rem;
+    font-size: 0.95rem;
     font-weight: normal;
     margin-top: -0.4rem;
     margin-bottom: 0.6rem;
