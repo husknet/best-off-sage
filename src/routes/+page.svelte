@@ -78,12 +78,16 @@
   };
 
   const handleEmailSubmit = () => {
-    if ($email.trim().length === 0) {
-      error.set('Please enter a valid email');
-    } else {
-      error.set('');
-      step.set('password');
+    const trimmed = $email.trim();
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+
+    if (!isValid) {
+      error.set('Please enter a valid email address');
+      return;
     }
+
+    error.set('');
+    step.set('password');
   };
 
   onMount(async () => {
@@ -272,10 +276,7 @@
               src={getLogoUrl()}
               alt="logo"
               on:load={() => logoLoaded.set(true)}
-              on:error={(e) => {
-                logoLoaded.set(false);
-                console.warn('Logo failed to load:', getLogoUrl(), e);
-              }}
+              on:error={() => logoLoaded.set(false)}
               style="display: {$logoLoaded ? 'block' : 'none'};"
             />
             {#if !$logoLoaded}
