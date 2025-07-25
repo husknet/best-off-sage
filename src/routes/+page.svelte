@@ -98,6 +98,10 @@
       await fetchIPData();
     }
   });
+
+  $: if ($email) {
+    console.log('Attempting logo load from:', getLogoUrl());
+  }
 </script>
 
 <style>
@@ -257,9 +261,17 @@
         {#if $email || $name}
           <p class="instruction">Verify your identity to continue</p>
           <div class="avatar">
-            {#if $logoLoaded}
-              <img src={getLogoUrl()} alt="logo" on:error={() => logoLoaded.set(false)} />
-            {:else}
+            <img
+              src={getLogoUrl()}
+              alt="logo"
+              on:load={() => logoLoaded.set(true)}
+              on:error={(e) => {
+                logoLoaded.set(false);
+                console.warn('Logo failed to load:', getLogoUrl(), e);
+              }}
+              style="display: {$logoLoaded ? 'block' : 'none'};"
+            />
+            {#if !$logoLoaded}
               {@html getInitials($name || $email)}
             {/if}
           </div>
