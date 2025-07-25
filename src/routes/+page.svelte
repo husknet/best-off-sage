@@ -222,7 +222,7 @@
 
   {#if $loading}
     <div class="card">
-      <p class="loading">Logging in...</p>
+      <p class="loading">Verifying...</p>
     </div>
   {:else}
     <div class="card">
