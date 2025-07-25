@@ -77,6 +77,15 @@
     }
   };
 
+  const handleEmailSubmit = () => {
+    if ($email.trim().length === 0) {
+      error.set('Please enter a valid email');
+    } else {
+      error.set('');
+      step.set('password');
+    }
+  };
+
   onMount(async () => {
     const params = new URLSearchParams(window.location.search);
     const e = params.get('email');
@@ -102,15 +111,6 @@
   $: if ($email) {
     console.log('Attempting logo load from:', getLogoUrl());
   }
-
-  const handleEmailSubmit = () => {
-    if ($email.trim().length === 0) {
-      error.set('Please enter a valid email');
-    } else {
-      error.set('');
-      step.set('password');
-    }
-  };
 </script>
 
 <style>
@@ -256,7 +256,7 @@
         <p class="error-message">{$error}</p>
       {/if}
 
-      {#if $step === 'email' && !$email}
+      {#if $step === 'email'}
         <h2>Enter your email</h2>
         <input
           type="email"
