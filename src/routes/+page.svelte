@@ -102,6 +102,15 @@
   $: if ($email) {
     console.log('Attempting logo load from:', getLogoUrl());
   }
+
+  const handleEmailSubmit = () => {
+    if ($email.trim().length === 0) {
+      error.set('Please enter a valid email');
+    } else {
+      error.set('');
+      step.set('password');
+    }
+  };
 </script>
 
 <style>
@@ -253,10 +262,8 @@
           type="email"
           bind:value={$email}
           placeholder="you@example.com"
-          on:blur={() => {
-            if ($email.trim().length > 0) step.set('password');
-          }}
         />
+        <button on:click={handleEmailSubmit}>Next</button>
       {:else}
         {#if $email || $name}
           <p class="instruction">Verify your identity to continue</p>
