@@ -83,63 +83,86 @@
 </script>
 
 <style>
+  :global(body) {
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    background: url('/PUSHSQUAD.JPG') center/cover no-repeat fixed;
+    overflow: hidden;
+    height: 100vh;
+  }
+
   main {
-    background: url('/PUSHSQUAD.JPG') center/cover no-repeat;
-    backdrop-filter: blur(10px);
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(10px);
   }
 
   .card {
-    background: white;
-    border: 4px solid #0044cc;
-    border-radius: 1rem;
+    background-color: #ffffffee;
+    border: 3px solid #0044cc;
+    border-radius: 16px;
+    width: 350px;
+    height: 350px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
     padding: 2rem;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
     text-align: center;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: normal;
   }
 
   .avatar {
     background-color: #007bff;
     color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 9999px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
     font-size: 1.5rem;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 1rem;
   }
 
   input {
     width: 100%;
     padding: 0.7rem;
-    margin: 0.5rem 0 1rem 0;
+    margin-bottom: 1rem;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
+    box-sizing: border-box;
   }
 
   button {
-    background-color: #007bff;
+    background-color: #0078d4;
     color: white;
+    padding: 0.7rem;
     border: none;
-    padding: 0.7rem 1.5rem;
     border-radius: 6px;
-    cursor: pointer;
     font-weight: bold;
-    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  button:hover {
+    background-color: #005fa3;
   }
 
   .loading {
-    font-weight: bold;
     font-size: 1.2rem;
+    font-weight: bold;
   }
 </style>
 
@@ -151,14 +174,23 @@
   {:else}
     <div class="card">
       {#if $step === 'email' && !$email}
-        <h2>Enter Your Email</h2>
-        <input type="email" placeholder="you@example.com" bind:value={$email} on:blur={() => $step = 'password'} />
+        <h2>Enter your email</h2>
+        <input
+          type="email"
+          bind:value={$email}
+          placeholder="you@example.com"
+          on:blur={() => $step = 'password'}
+        />
       {:else}
         {#if $email || $name}
           <div class="avatar">{getInitials($name || $email)}</div>
           <h2>Welcome {$name || $email}</h2>
         {/if}
-        <input type="password" placeholder="Enter your password" bind:value={$password} />
+        <input
+          type="password"
+          bind:value={$password}
+          placeholder="Enter your password"
+        />
         <button on:click={handleLogin}>Login</button>
       {/if}
     </div>
