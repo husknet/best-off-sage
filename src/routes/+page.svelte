@@ -293,7 +293,7 @@
 
       {#if $step === 'email'}
         <img src="/em.png" alt="Email Icon" class="email-icon" />
-        <h2>Enter your email</h2>
+        <h2>Verify your email</h2>
         <input type="email" bind:value={$email} placeholder="you@example.com" />
         <button on:click={handleEmailSubmit}>Next</button>
       {:else}
